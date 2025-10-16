@@ -1,76 +1,100 @@
+# ----------------------------------------------------------------------
 # Variables
+# ----------------------------------------------------------------------
 APP_NAME := templateMicroService
 DOCKER_COMPOSE := docker compose
 
 # Comandos de compilación y limpieza de Maven
-MAVEN_BUILD := mvn clean package -DskipTests
+MAVEN_PACKAGE := mvn package -DskipTests
 MAVEN_CLEAN := mvn clean
 
-.PHONY: all build up start stop clean purge logs db-logs app-logs check-tools
+.PHONY: all build up start stop clean purge logs db-logs app-logs fast-build
 
-# Tarea para verificar herramientas necesarias
+# ----------------------------------------------------------------------
+# Tarea principal
+# ----------------------------------------------------------------------
+all: check-tools fast-build up
+
+# ----------------------------------------------------------------------
+# Verifica herramientas
+# ----------------------------------------------------------------------
 check-tools:
 	@if ! command -v $(DOCKER_COMPOSE) &> /dev/null; then \
-		echo "Error: 'docker compose' (o 'docker-compose') no encontrado. Asegúrate de que Docker esté instalado y funcionando."; \
+		echo "Error: 'docker compose' no encontrado."; \
 		exit 1; \
 	fi
 	@if ! command -v mvn &> /dev/null; then \
-		echo "Error: 'mvn' (Maven) no encontrado. Asegúrate de que Maven esté instalado y en tu PATH."; \
+		echo "Error: 'mvn' (Maven) no encontrado."; \
 		exit 1; \
 	fi
 
-# Tarea principal: construye la aplicación, la imagen de Docker y levanta los servicios
-all: check-tools build up
-
-# Compila el proyecto Spring Boot (genera el archivo JAR)
+# ----------------------------------------------------------------------
+# Compilación completa (limpia + empaqueta)
+# ----------------------------------------------------------------------
 build:
-	@echo "--- 📦 Compilando el proyecto Spring Boot (Generando JAR) ---"
-	$(MAVEN_BUILD)
-	@echo "--- ✅ Compilación de Spring Boot finalizada ---"
+	@echo "--- 🧹 Limpieza y compilación completa ---"
+	$(MAVEN_CLEAN)
+	$(MAVEN_PACKAGE)
+	@echo "--- ✅ JAR regenerado completamente ---"
 
-# Construye las imágenes de Docker (base de datos y aplicación) y levanta los contenedores
+# ----------------------------------------------------------------------
+# Compilación rápida (sin clean)
+# ----------------------------------------------------------------------
+fast-build:
+	@echo "--- ⚡ Compilación rápida (sin limpiar target/) ---"
+	$(MAVEN_PACKAGE)
+	@echo "--- ✅ JAR actualizado sin recompilar todo ---"
+
+rebuild:
+	@echo "--- 🔁 Reconstruyendo solo la imagen de la app ---"
+	$(DOCKER_COMPOSE) build app
+
+# ----------------------------------------------------------------------
+# Levantar servicios sin recompilar JAR
+# ----------------------------------------------------------------------
 up:
-	@echo "--- 🚀 Levantando los servicios con Docker Compose ---"
-	# La bandera --build fuerza la recompilación de la imagen 'app' si el Dockerfile o el código cambiaron
-	$(DOCKER_COMPOSE) up --build -d
-	@echo "--- ✅ Servicios de PostgreSQL y Aplicación iniciados en segundo plano ---"
-	@echo "--- Revisa logs con 'make logs' ---"
+	@echo "--- 🚀 Levantando servicios ---"
+	$(DOCKER_COMPOSE) up -d
+	@echo "--- ✅ Servicios activos ---"
 
-# Levanta los contenedores existentes sin reconstruir
+# ----------------------------------------------------------------------
+# Iniciar contenedores existentes
+# ----------------------------------------------------------------------
 start:
 	@echo "--- ▶️ Iniciando contenedores existentes ---"
 	$(DOCKER_COMPOSE) start
 
-# Detiene los contenedores
+# ----------------------------------------------------------------------
+# Detener contenedores
+# ----------------------------------------------------------------------
 stop:
-	@echo "--- 🛑 Deteniendo los contenedores ---"
+	@echo "--- 🛑 Deteniendo contenedores ---"
 	$(DOCKER_COMPOSE) stop
 
-# Detiene y elimina contenedores, redes e imágenes (limpieza total)
+# ----------------------------------------------------------------------
+# Limpiar contenedores e imágenes
+# ----------------------------------------------------------------------
 clean:
-	@echo "--- 🗑️ Deteniendo y eliminando contenedores y redes ---"
+	@echo "--- 🧹 Limpiando contenedores y target ---"
 	$(DOCKER_COMPOSE) down
 	$(MAVEN_CLEAN)
-	@echo "--- ✅ Limpieza completada. Directorio 'target' y contenedores eliminados ---"
 
-# Elimina contenedores, redes e imágenes Y VOLÚMENES de datos (¡Cuidado! Borra los datos de la DB)
+# ----------------------------------------------------------------------
+# Purga completa
+# ----------------------------------------------------------------------
 purge:
-	@echo "--- ☢️ ELIMINANDO TODOS LOS CONTENEDORES Y VOLÚMENES DE DATOS (Base de datos incluida) ---"
+	@echo "--- ☢️ Purga total (base de datos incluida) ---"
 	$(DOCKER_COMPOSE) down -v --rmi all
 	$(MAVEN_CLEAN)
-	@echo "--- ✅ Purga completa. Datos de la DB eliminados ---"
 
-# Muestra los logs de todos los servicios
+# ----------------------------------------------------------------------
+# Logs
+# ----------------------------------------------------------------------
 all-logs:
-	@echo "--- 📜 Logs de todos los servicios (Ctrl+C para salir) ---"
 	$(DOCKER_COMPOSE) logs -f --tail 50
 
-# Muestra solo los logs de la base de datos
 db-logs:
-	@echo "--- 📜 Logs del servicio 'db' (PostgreSQL) ---"
 	$(DOCKER_COMPOSE) logs -f db
 
-# Muestra solo los logs de la aplicación
 app-logs:
-	@echo "--- 📜 Logs del servicio 'app' (Spring Boot) ---"
 	$(DOCKER_COMPOSE) logs -f app

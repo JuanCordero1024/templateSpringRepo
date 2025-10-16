@@ -6,7 +6,6 @@ services:
   # ------------------------------------------------
   db:
     image: postgres:15-alpine
-    container_name: postgres_db
     restart: always
     environment:
       # Las variables de entorno coinciden con la configuración en application.properties
@@ -16,7 +15,6 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      # Persistencia de datos: almacena los datos de la DB fuera del contenedor para que no se pierdan
       - postgres_data:/var/lib/postgresql/data
 
   # ------------------------------------------------
@@ -37,7 +35,7 @@ services:
     environment:
       # También puedes pasar las variables de conexión aquí, aunque ya están en application.properties
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/microservice_db
-      SPRING_DATASOURCE_USERNAME: dockeruser
+      SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: password123
 
 # Volumen para persistir los datos de PostgreSQL
