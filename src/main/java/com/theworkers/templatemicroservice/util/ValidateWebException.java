@@ -1,4 +1,4 @@
-package util;
+package com.theworkers.templatemicroservice.util;
 
 import com.theworkers.templatemicroservice.model.output.WebResponse;
 import lombok.Getter;

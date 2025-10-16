@@ -1,5 +1,6 @@
-package util;
+package com.theworkers.templatemicroservice.util;
 
+import com.theworkers.templatemicroservice.model.output.PaginatedResponse;
 import org.springframework.data.domain.Page;
 
 public class PaginationHelper {
