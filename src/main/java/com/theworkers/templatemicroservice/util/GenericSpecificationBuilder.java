@@ -1,4 +1,4 @@
-package util;
+package com.theworkers.templatemicroservice.util;
 
 import jakarta.persistence.criteria.Path;
 import org.springframework.data.jpa.domain.Specification;

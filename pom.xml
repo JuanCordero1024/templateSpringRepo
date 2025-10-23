@@ -11,11 +11,11 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.rtse</groupId>
-    <artifactId>rtse</artifactId>
+    <groupId>com.userMicroService</groupId>
+    <artifactId>userMicroService</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rtse</name>
-    <description>Rtse project</description>
+    <name>userMicroService</name>
+    <description>UserMicroService Project</description>
 
     <properties>
         <java.version>21</java.version>
