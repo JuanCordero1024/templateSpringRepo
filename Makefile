@@ -1,7 +1,7 @@
 # ----------------------------------------------------------------------
 # Variables
 # ----------------------------------------------------------------------
-APP_NAME := templateMicroService
+APP_NAME := RoleMicroService
 DOCKER_COMPOSE := docker compose
 
 # Comandos de compilación y limpieza de Maven

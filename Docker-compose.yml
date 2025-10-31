@@ -4,16 +4,16 @@ services:
   # ------------------------------------------------
   # SERVICIO DE BASE DE DATOS (PostgreSQL 15)
   # ------------------------------------------------
-  db:
+  RoleMicroServiceDB:
     image: postgres:15-alpine
     restart: always
     environment:
       # Las variables de entorno coinciden con la configuración en application.properties
-      POSTGRES_DB: microservice_db
+      POSTGRES_DB: roleMicroService_db
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: password123
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -24,17 +24,17 @@ services:
     build:
       context: .  # Busca el Dockerfile en el directorio actual
       dockerfile: Dockerfile
-    container_name: spring_microservice
+    container_name: AppRoleMicroService
     restart: on-failure
     ports:
       # Mapea el puerto 8080 del contenedor al puerto 8080 de tu máquina local
-      - "8080:8080"
+      - "8081:8080"
     depends_on:
       # Asegura que la base de datos se inicie antes que la aplicación
-      - db
+      - RoleMicroServiceDB
     environment:
       # También puedes pasar las variables de conexión aquí, aunque ya están en application.properties
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/microservice_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://RoleMicroServiceDB:5432/roleMicroService_db
       SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: password123
 
