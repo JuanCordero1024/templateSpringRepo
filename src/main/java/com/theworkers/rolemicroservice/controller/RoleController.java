@@ -8,12 +8,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.theworkers.rolemicroservice.service.RoleService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/role")
@@ -50,6 +47,31 @@ public class RoleController {
         return roleService.createRole(newRole);
     }
 
+    @GetMapping("/read/{nameRole}")
+    @Operation(
+            summary = "Read a Rolen, with Request Body via GET, " +
+                    "receiving a Name of Role"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Operación exitosa",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = WebResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Error interno del servidor",
+                            content = @Content
+                    ),
+            }
+    )
+    public WebResponse readRole(@Valid @RequestParam("nameRole") String roleName) {
+        return roleService.readRole(roleName);
+    }
 
 
 
