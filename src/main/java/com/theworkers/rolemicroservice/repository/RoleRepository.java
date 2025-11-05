@@ -7,4 +7,6 @@ public interface RoleRepository extends JpaRepository<Role, Long> {
     boolean existsByName(String name);
 
     Role getRoleByName(String name);
+
+    Role getRoleById(Long id);
 }

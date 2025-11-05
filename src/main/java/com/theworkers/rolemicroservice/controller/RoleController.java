@@ -1,6 +1,7 @@
 package com.theworkers.rolemicroservice.controller;
 
 import com.theworkers.rolemicroservice.model.input.RoleInputDTO;
+import com.theworkers.rolemicroservice.model.output.RoleOutputDTO;
 import com.theworkers.rolemicroservice.model.output.WebResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -73,6 +74,31 @@ public class RoleController {
         return roleService.readRole(roleName);
     }
 
+    @GetMapping("/readById/{roleId}")
+    @Operation(
+            summary = "Read a Rolen, with Request Body via GET, " +
+                    "receiving a Name of Role"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Operación exitosa",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = WebResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Error interno del servidor",
+                            content = @Content
+                    ),
+            }
+    )
+    public RoleOutputDTO readRoleById(@Valid @RequestParam("roleId") String roleId) {
+        return roleService.readRoleById(Long.parseLong(roleId));
+    }
 
 
 }

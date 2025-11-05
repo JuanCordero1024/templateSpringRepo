@@ -28,7 +28,7 @@ services:
     restart: on-failure
     ports:
       # Mapea el puerto 8080 del contenedor al puerto 8080 de tu máquina local
-      - "8081:8080"
+      - "8082:8080"
     depends_on:
       # Asegura que la base de datos se inicie antes que la aplicación
       - RoleMicroServiceDB

@@ -48,6 +48,10 @@ public class RoleServiceImpl implements RoleService {
         }catch (ValidateWebException e){throw e;}
     }
 
+    public RoleOutputDTO readRoleById(Long roleId) {
+        return roleMapper.toOutputEntity(roleRepository.getRoleById(roleId));
+    }
+
     public WebResponse udpateRole(RoleInputDTO user) {
         return null;
     }
