@@ -13,7 +13,7 @@ public class UserValidator {
         GeneralValidator.notNullValidator.validate(userInputDTO.getEmail(), "Email");
         GeneralValidator.notNullValidator.validate(userInputDTO.getName(), "Name");
         GeneralValidator.notNullValidator.validate(userInputDTO.getLastName(), "Last Name");
-        GeneralValidator.notNullValidator.validate(userInputDTO.getMidleName(), "Middle Name");
+        GeneralValidator.notNullValidator.validate(userInputDTO.getMiddleName(), "Middle Name");
         GeneralValidator.notNullValidator.validate(userInputDTO.getPassword(), "Password");
         GeneralValidator.notNullValidator.validate(userInputDTO.getRole(), "Role");
     }

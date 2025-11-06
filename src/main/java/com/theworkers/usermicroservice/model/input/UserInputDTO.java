@@ -18,7 +18,7 @@ public class UserInputDTO {
     private String lastName;
 
     @Schema(description = "User's midle name")
-    private String midleName;
+    private String middleName;
 
     @Schema(description = "User's email")
     @Email(message = "The email format is invalid.")

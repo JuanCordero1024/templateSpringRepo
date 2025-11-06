@@ -27,8 +27,8 @@ public class User {
 
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Role role;
+    @Column(name = "role_id")
+    private Long roleId;
 
 }
 

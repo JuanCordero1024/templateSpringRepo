@@ -4,6 +4,7 @@ import com.theworkers.usermicroservice.RoleServiceClient;
 import com.theworkers.usermicroservice.model.Role;
 import com.theworkers.usermicroservice.model.User;
 import com.theworkers.usermicroservice.model.input.UserInputDTO;
+import com.theworkers.usermicroservice.model.mappers.RoleMapper;
 import com.theworkers.usermicroservice.model.mappers.UserMapper;
 import com.theworkers.usermicroservice.model.output.WebResponse;
 import com.theworkers.usermicroservice.repository.RoleRepository;
@@ -25,18 +26,20 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
     private final UserValidator userValidator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final RoleMapper roleMapper;
 
     public UserServiceImpl(UserRepository userRepository,
                            UserMapper userMapper,
                            UserValidator userValidator,
                            RoleServiceClient roleServiceClient,
-                           BCryptPasswordEncoder passwordEncoder)
+                           BCryptPasswordEncoder passwordEncoder, RoleMapper roleMapper)
     {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.roleServiceClient = roleServiceClient;
         this.userValidator = userValidator;
         this.bCryptPasswordEncoder = passwordEncoder;
+        this.roleMapper = roleMapper;
     }
 
     public WebResponse createUser(UserInputDTO userInput) {
@@ -44,6 +47,7 @@ public class UserServiceImpl implements UserService {
             userValidator.UserValidator(userInput);
             userInput.setPassword(bCryptPasswordEncoder.encode(userInput.getPassword()));
             User newUser = userMapper.toEntity(userInput);
+            newUser.setRoleId(roleServiceClient.readRoleById(userInput.getRole()).getId());
             userRepository.save(newUser);
             return new WebResponse("The user is successfully created",
                                     HttpStatus.CREATED, null);
