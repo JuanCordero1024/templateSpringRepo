@@ -1,0 +1,15 @@
+# application.yml del Microservicio de Auth
+server:
+  port: 8083
+
+jwt:
+  secret-key: 3ba0f446898b9d9cba6f92ea5f230ff06b8d0a7889070f88ff2b92cf51fde1bd
+  expiration-ms: 172800000
+
+# Feign (Para llamar a Usuarios y Roles)
+user:
+  service:
+    url: http://localhost:8080/api/user
+role:
+  service:
+    url: http://localhost:8080/api/role
