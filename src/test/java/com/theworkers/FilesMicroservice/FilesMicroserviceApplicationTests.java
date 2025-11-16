@@ -1,10 +1,10 @@
-package com.theworkers.templatemicroservice;
+package com.theworkers.FilesMicroservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TemplateMicroServiceApplicationTests {
+class FilesMicroserviceApplicationTests {
 
 	@Test
 	void contextLoads() {

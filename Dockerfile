@@ -28,7 +28,7 @@ FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
 # Define el nombre del archivo JAR (ajústalo si cambia en tu pom.xml)
-ARG JAR_FILE=userMicroService-0.0.1-SNAPSHOT.jar
+ARG JAR_FILE=FilesMicroservice-0.0.1-SNAPSHOT.jar
 
 # Copia el JAR desde la etapa build
 COPY --from=build /app/target/${JAR_FILE} app.jar
