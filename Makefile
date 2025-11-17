@@ -1,100 +1,67 @@
-# ----------------------------------------------------------------------
-# Variables
-# ----------------------------------------------------------------------
-APP_NAME := UserMicroService
-DOCKER_COMPOSE := docker compose
+# Nombre del servicio de la aplicación en Docker-compose.yml
+APP_SERVICE = app
 
-# Comandos de compilación y limpieza de Maven
-MAVEN_PACKAGE := mvn package -DskipTests
-MAVEN_CLEAN := mvn clean
+# Nombre del archivo JAR que se construye (debe coincidir con Dockerfile y pom.xml)
+JAR_NAME = FilesMicroservice-0.0.1-SNAPSHOT.jar
 
-.PHONY: all build up start stop clean purge logs db-logs app-logs fast-build
+# Alias para docker compose (para compatibilidad con diferentes versiones de Docker)
+DOCKER_COMPOSE = docker-compose
 
-# ----------------------------------------------------------------------
-# Tarea principal
-# ----------------------------------------------------------------------
-all: check-tools fast-build up
+# ==============================================================================
+# COMANDOS PRINCIPALES DE DESPLIEGUE (Los que intentaste usar)
+# ==============================================================================
 
-# ----------------------------------------------------------------------
-# Verifica herramientas
-# ----------------------------------------------------------------------
-check-tools:
-	@if ! command -v $(DOCKER_COMPOSE) &> /dev/null; then \
-		echo "Error: 'docker compose' no encontrado."; \
-		exit 1; \
-	fi
-	@if ! command -v mvn &> /dev/null; then \
-		echo "Error: 'mvn' (Maven) no encontrado."; \
-		exit 1; \
-	fi
+# 1. Compila el proyecto con Maven y construye la imagen Docker de la aplicación
+build: clean
+	@echo "==========================================="
+	@echo "    🛠️ 1. Compilando y Construyendo JAR    "
+	@echo "==========================================="
+	@mvn clean package -DskipTests
+	@echo "==========================================="
+	@echo "    🐳 2. Construyendo imagen Docker       "
+	@echo "==========================================="
+	$(DOCKER_COMPOSE) build $(APP_SERVICE)
 
-# ----------------------------------------------------------------------
-# Compilación completa (limpia + empaqueta)
-# ----------------------------------------------------------------------
-build:
-	@echo "--- 🧹 Limpieza y compilación completa ---"
-	$(MAVEN_CLEAN)
-	$(MAVEN_PACKAGE)
-	@echo "--- ✅ JAR regenerado completamente ---"
-
-# ----------------------------------------------------------------------
-# Compilación rápida (sin clean)
-# ----------------------------------------------------------------------
-fast-build:
-	@echo "--- ⚡ Compilación rápida (sin limpiar target/) ---"
-	$(MAVEN_PACKAGE)
-	@echo "--- ✅ JAR actualizado sin recompilar todo ---"
-
-rebuild:
-	@echo "--- 🔁 Reconstruyendo solo la imagen de la app ---"
-	$(DOCKER_COMPOSE) build app
-
-# ----------------------------------------------------------------------
-# Levantar servicios sin recompilar JAR
-# ----------------------------------------------------------------------
+# 2. Inicia los servicios definidos en el docker-compose
 up:
-	@echo "--- 🚀 Levantando servicios ---"
+	@echo "==========================================="
+	@echo "    🚀 Iniciando Contenedores (DB + App)   "
+	@echo "==========================================="
 	$(DOCKER_COMPOSE) up -d
-	@echo "--- ✅ Servicios activos ---"
 
-# ----------------------------------------------------------------------
-# Iniciar contenedores existentes
-# ----------------------------------------------------------------------
-start:
-	@echo "--- ▶️ Iniciando contenedores existentes ---"
-	$(DOCKER_COMPOSE) start
+# 3. Muestra el estado de los contenedores (Sustituye 'makest')
+status:
+	@echo "==========================================="
+	@echo "    🔍 Estado de los Contenedores          "
+	@echo "==========================================="
+	$(DOCKER_COMPOSE) ps
 
-# ----------------------------------------------------------------------
-# Detener contenedores
-# ----------------------------------------------------------------------
-stop:
-	@echo "--- 🛑 Deteniendo contenedores ---"
-	$(DOCKER_COMPOSE) stop
+# 4. Muestra los logs de la aplicación y la base de datos (Sustituye 'make all logs')
+logs:
+	@echo "==========================================="
+	@echo "    📄 Mostrando Logs (Ctrl+C para salir)  "
+	@echo "==========================================="
+	$(DOCKER_COMPOSE) logs -f
 
-# ----------------------------------------------------------------------
-# Limpiar contenedores e imágenes
-# ----------------------------------------------------------------------
+# ==============================================================================
+# COMANDOS DE MANTENIMIENTO
+# ==============================================================================
+
+# Detiene y elimina los contenedores y redes
+down:
+	@echo "==========================================="
+	@echo "    🛑 Deteniendo y Eliminando Contenedores"
+	@echo "==========================================="
+	$(DOCKER_COMPOSE) down -v
+
+# Limpia el directorio de construcción de Maven
 clean:
-	@echo "--- 🧹 Limpiando contenedores y target ---"
-	$(DOCKER_COMPOSE) down
-	$(MAVEN_CLEAN)
+	@echo "==========================================="
+	@echo "    🧹 Limpiando directorio 'target'       "
+	@echo "==========================================="
+	@mvn clean
 
-# ----------------------------------------------------------------------
-# Purga completa
-# ----------------------------------------------------------------------
-purge:
-	@echo "--- ☢️ Purga total (base de datos incluida) ---"
-	$(DOCKER_COMPOSE) down -v --rmi all
-	$(MAVEN_CLEAN)
+# Ejecuta el flujo completo de construcción y despliegue
+deploy: build up status logs
 
-# ----------------------------------------------------------------------
-# Logs
-# ----------------------------------------------------------------------
-all-logs:
-	$(DOCKER_COMPOSE) logs -f --tail 50
-
-db-logs:
-	$(DOCKER_COMPOSE) logs -f db
-
-app-logs:
-	$(DOCKER_COMPOSE) logs -f app
+.PHONY: build up status logs down clean deploy
