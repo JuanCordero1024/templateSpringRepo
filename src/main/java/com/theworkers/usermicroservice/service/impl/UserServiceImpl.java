@@ -4,6 +4,7 @@ import com.theworkers.usermicroservice.RoleServiceClient;
 import com.theworkers.usermicroservice.model.Role;
 import com.theworkers.usermicroservice.model.User;
 import com.theworkers.usermicroservice.model.input.UserInputDTO;
+import com.theworkers.usermicroservice.model.input.UserLoginInput;
 import com.theworkers.usermicroservice.model.mappers.RoleMapper;
 import com.theworkers.usermicroservice.model.mappers.UserMapper;
 import com.theworkers.usermicroservice.model.output.WebResponse;
@@ -64,5 +65,14 @@ public class UserServiceImpl implements UserService {
 
     public WebResponse deleteUser(UUID userId) {
         return null;
+    }
+
+    public WebResponse verifyUserCredentials(UserLoginInput credentials) {
+        try{
+            if (userValidator.validateUserCrendentials(credentials,  userRepository, bCryptPasswordEncoder)) {
+                return new WebResponse("Successfully logged in", HttpStatus.OK,
+                        userMapper.toUserOutPutDTO(userRepository.getUserByEmail(credentials.getEmail())));
+            }else {return new WebResponse("Password or email not found", HttpStatus.UNAUTHORIZED,false);}
+        }catch(ValidateWebException e){throw e;}
     }
 }

@@ -1,5 +1,3 @@
-# application.yml del Microservicio de Usuarios
-roles:
+role:
   service:
-    # 🔑 La URL de destino apunta a la API Gateway + el prefijo de ruta que activó el Predicado
     url: http://localhost:8080/api/role

@@ -13,21 +13,22 @@ import java.util.UUID;
 public class UserOutputDTO {
 
     @Schema(description = "Id of user Output")
-    private UUID Id;
+    private UUID id;
 
     @Schema(description = "User's last name")
     private String lastName;
 
-    @Schema(description = "User's midle name")
+    @Schema(description = "User's middle name")
     private String middleName;
 
     @Schema(description = "User's email")
     private String email;
 
-    @Schema(description = "User's password")
-    private String password;
-
     @Schema(description = "User's role ID")
-    private Long role;
+    private Long roleId;
+
+    @Schema(description = "User's email")
+    private String token;
+
 
 }

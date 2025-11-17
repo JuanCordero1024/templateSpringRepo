@@ -1,6 +1,7 @@
 package com.theworkers.usermicroservice.controller;
 
 import com.theworkers.usermicroservice.model.input.UserInputDTO;
+import com.theworkers.usermicroservice.model.input.UserLoginInput;
 import com.theworkers.usermicroservice.model.output.WebResponse;
 import com.theworkers.usermicroservice.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,5 +51,30 @@ public class UserController {
         return userService.createUser(newUser);
     }
 
+    @PostMapping("/verify-credentials")
+    @Operation(
+            summary = "Verify the crendentials of one User, with Request Body via POST, " +
+                    "receiving a User Model retrieving the user Model inserted"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Operación exitosa",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = WebResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Error interno del servidor",
+                            content = @Content
+                    ),
+            }
+    )
+    public WebResponse verifyCredentials(@Valid @RequestBody UserLoginInput loginCredentials) {
+        return userService.verifyUserCredentials(loginCredentials);
+    }
 
 }

@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "role-service", url = "${roles.service.url}")
+@FeignClient(name = "role-service", url = "${role.service.url}")
 public interface RoleServiceClient {
     @GetMapping("/readById")
     RoleOutputDTO readRoleById(@RequestParam("roleId") Long roleId);

@@ -27,8 +27,13 @@ public class User {
 
     private String password;
 
+    private String eccPublicKey;
+
     @Column(name = "role_id")
     private Long roleId;
+
+    @Transient
+    private String token;
 
 }
 
