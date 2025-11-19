@@ -4,16 +4,16 @@ services:
   # ------------------------------------------------
   # SERVICIO DE BASE DE DATOS (PostgreSQL 15)
   # ------------------------------------------------
-  FilesMicroserviceDB:
+  MicroServiceDB: # <-- 1. NOMBRE DEL SERVICIO (HOST)
     image: postgres:15-alpine
     restart: always
     environment:
-      # Las variables de entorno coinciden con la configuración en application.properties
-      POSTGRES_DB: FilesMicroservice_db
+      # 2. NOMBRE DE LA BASE DE DATOS
+      POSTGRES_DB: filesmicroService_db
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: password123
     ports:
-      - "5434:5432"
+      - "5437:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -22,19 +22,20 @@ services:
   # ------------------------------------------------
   app:
     build:
-      context: .  # Busca el Dockerfile en el directorio actual
+      context: .
       dockerfile: Dockerfile
-    container_name: FilesMicroservice
+    container_name: FilesMicroService
     restart: on-failure
     ports:
-      # Mapea el puerto 8080 del contenedor al puerto 8080 de tu máquina local
-      - "8037:8080"
+      - "8090:8080"
     depends_on:
-      # Asegura que la base de datos se inicie antes que la aplicación
-      - FilesMicroserviceDB
+      # 3. La aplicación depende de este nombre de servicio
+      - MicroServiceDB
     environment:
-      # También puedes pasar las variables de conexión aquí, aunque ya están en application.properties
-      SPRING_DATASOURCE_URL: jdbc:postgresql://FilesMicroserviceDB:5432/FilesMicroservice_db
+      # ¡CORRECCIÓN CRÍTICA!
+      # El host (MicroServiceDB) debe coincidir con el nombre del servicio DB (Línea 7).
+      # El nombre de la DB (filesmicroService_db) debe coincidir con POSTGRES_DB (Línea 14).
+      SPRING_DATASOURCE_URL: jdbc:postgresql://MicroServiceDB:5432/filesmicroService_db
       SPRING_DATASOURCE_USERNAME: myuser
       SPRING_DATASOURCE_PASSWORD: password123
 

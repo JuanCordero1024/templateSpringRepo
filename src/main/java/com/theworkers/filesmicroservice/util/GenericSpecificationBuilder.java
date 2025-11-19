@@ -1,5 +1,6 @@
-package com.theworkers.templatemicroservice.util;
+package com.theworkers.filesmicroservice.util;
 
+import com.theworkers.filesmicroservice.util.ValidateWebException;
 import jakarta.persistence.criteria.Path;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;

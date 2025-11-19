@@ -1,6 +1,6 @@
-package com.theworkers.templatemicroservice.util;
+package com.theworkers.filesmicroservice.util;
 
-import com.theworkers.templatemicroservice.model.output.WebResponse;
+import com.theworkers.filesmicroservice.model.output.WebResponse;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
