@@ -4,7 +4,7 @@ from reportlab.lib.pagesizes import letter
 from datetime import datetime
 import io
 
-def add_watermark_pdf(input_pdf, usuario):
+def add_watermark_pdf(input_pdf, usuario, usuario_id=str):
     reader = PdfReader(input_pdf)
     writer = PdfWriter()
 
@@ -27,6 +27,7 @@ def add_watermark_pdf(input_pdf, usuario):
     fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     writer.add_metadata({
         "/Author": usuario,
+        "/UserID": str(usuario_id),
         "/Title": f"Documento firmado por {usuario}",
         "/Subject": "Firma Beta - Microservicio",
         "/Keywords": "firma, beta, microservicio",

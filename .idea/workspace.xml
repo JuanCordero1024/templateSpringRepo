@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4069aa74-d04a-4cdf-811a-9e896abac962" name="Changes" comment="" />
+    <list default="true" id="4069aa74-d04a-4cdf-811a-9e896abac962" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/microservicio-firma.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/watermark_pdf.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/watermark_pdf.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/watermark_word.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/watermark_word.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/firmas_log.json" beforeDir="false" afterPath="$PROJECT_DIR$/firmas_log.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,6 +34,8 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "fear/Microservice__firma",
     "settings.editor.selected.configurable": "terminal"
   }
