@@ -74,7 +74,7 @@ public class RoleController {
         return roleService.readRole(roleName);
     }
 
-    @GetMapping("/readById/{roleId}")
+    @GetMapping("/readById")
     @Operation(
             summary = "Read a Rolen, with Request Body via GET, " +
                     "receiving a Name of Role"
@@ -96,8 +96,8 @@ public class RoleController {
                     ),
             }
     )
-    public RoleOutputDTO readRoleById(@Valid @RequestParam("roleId") String roleId) {
-        return roleService.readRoleById(Long.parseLong(roleId));
+    public RoleOutputDTO readRoleById(@RequestParam("roleId") Long roleId) {
+        return roleService.readRoleById(roleId);
     }
 
 

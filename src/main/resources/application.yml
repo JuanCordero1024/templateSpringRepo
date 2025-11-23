@@ -1,0 +1,3 @@
+jwt:
+  secret-key: uaobUg2LDENICut8ZxXjVpUL6ob+9+J1oFje1qn6EZi6D+CB2WV6q02AVlCzdxpNNrEKqjDo0nLeVcoaLPu39A==
+  expiration-ms: 172800000
