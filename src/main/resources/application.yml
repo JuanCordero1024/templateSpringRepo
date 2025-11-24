@@ -3,7 +3,7 @@ server:
   port: 8083
 
 jwt:
-  secret-key: 3ba0f446898b9d9cba6f92ea5f230ff06b8d0a7889070f88ff2b92cf51fde1bd
+  secret-key: uaobUg2LDENICut8ZxXjVpUL6ob+9+J1oFje1qn6EZi6D+CB2WV6q02AVlCzdxpNNrEKqjDo0nLeVcoaLPu39A==
   expiration-ms: 172800000
 
 # Feign (Para llamar a Usuarios y Roles)

@@ -20,4 +20,8 @@ public class UserLoginInput {
     @Schema(description = "User's password")
     @NotEmpty(message = "The password can not be null")
     private String password;
+
+    @Schema(description = "User's Ecc Public Token")
+    @NotEmpty(message = "The ECC public token can not be null")
+    private String eccToken;
 }
