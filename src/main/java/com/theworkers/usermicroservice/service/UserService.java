@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface UserService {
-    WebResponse createUser(UserInputDTO user);
+    WebResponse createUser(String jwt, UserInputDTO user);
     WebResponse readUser(UUID userId);
     WebResponse readUserForSign(UUID userId);
     WebResponsePagination readUsers(int page, int size, Map<String, String> filter);

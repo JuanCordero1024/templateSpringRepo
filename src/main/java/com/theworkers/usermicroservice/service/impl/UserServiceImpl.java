@@ -54,13 +54,13 @@ public class UserServiceImpl implements UserService {
         this.cryptoHelper = cryptoHelper;
     }
 
-    public WebResponse createUser(UserInputDTO userInput) {
+    public WebResponse createUser(String auth,UserInputDTO userInput) {
         try{
             CryptoHelper.StringKeyPair keys = cryptoHelper.generateRSAKeys();
             userValidator.UserValidator(userInput);
             userInput.setPassword(bCryptPasswordEncoder.encode(userInput.getPassword()));
             User newUser = userMapper.toEntity(userInput);
-            newUser.setRoleId(roleServiceClient.readRoleById(userInput.getRole()).getId());
+            newUser.setRoleId(roleServiceClient.readRoleById(auth, userInput.getRole()).getId());
             newUser.setPublicKey(keys.publicKey());
             newUser.setPrivateKey(keys.privateKey());
             userRepository.save(newUser);
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
             if (userInput.getPassword() != null)
                 userFromBd.setPassword(bCryptPasswordEncoder.encode(userInput.getPassword()));
             if (userInput.getRole() != null)
-                userFromBd.setRoleId(roleServiceClient.readRoleById(userInput.getRole()).getId());
+                userFromBd.setRoleId(roleServiceClient.readRoleById(auth, userInput.getRole()).getId());
             userRepository.save(userFromBd);
             return new WebResponse("The user is successfully updated",
                     HttpStatus.CREATED, null);
