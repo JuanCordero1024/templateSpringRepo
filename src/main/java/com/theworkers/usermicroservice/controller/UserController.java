@@ -57,11 +57,10 @@ public class UserController {
             }
     )
     public WebResponse createUser(
-            @Parameter(hidden = true)
-            @RequestHeader("Authorization") String authorization,
+            //#@Parameter(hidden = true) @RequestHeader("Authorization") String authorization,
                                     @Valid @RequestBody UserInputDTO newUser) {
         log.info("Creating a User, with Request Body via POST: " +  newUser.toString());
-        return userService.createUser(authorization, newUser);
+        return userService.createUser(newUser);
     }
 
     @PostMapping("/verify-credentials")

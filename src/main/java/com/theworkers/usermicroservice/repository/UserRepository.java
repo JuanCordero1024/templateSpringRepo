@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import java.util.UUID;
 
 public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificationExecutor<User> {
-    @NotEmpty(message = "The password can not be null") User getUserByEmail(String email);
+    @NotEmpty(message = "The email can not be null") User getUserByEmail(String email);
 
     User getUserById(UUID id);
 }

@@ -10,6 +10,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "role-service", url = "${role.service.url}", configuration = FeignClientProperties.FeignClientConfiguration.class)
 public interface RoleServiceClient {
     @GetMapping("/readById")
-    RoleOutputDTO readRoleById(@RequestHeader("Authorization") String authorization,
-                                           @RequestParam("roleId") Long roleId);
+    RoleOutputDTO readRoleById(@RequestParam("roleId") Long roleId);
 }
