@@ -1,5 +1,6 @@
 package com.theworkers.templatemicroservice.model.output;
 
+import com.theworkers.templatemicroservice.model.enums.UserStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +16,9 @@ public class UserOutputDTO {
     @Schema(description = "Id of user Output")
     private UUID id;
 
+    @Schema(description = "User's name")
+    private String name;
+
     @Schema(description = "User's last name")
     private String lastName;
 
@@ -23,7 +27,9 @@ public class UserOutputDTO {
 
     @Schema(description = "User's email")
     private String email;
-
+    @Schema(description = "User's employee Number")
+    private String employeeNumber;
+    private UserStatus status;
     @Schema(description = "User's role ID")
     private Long roleId;
 

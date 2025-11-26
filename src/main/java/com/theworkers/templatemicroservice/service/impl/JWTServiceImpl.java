@@ -23,11 +23,10 @@ public class JWTServiceImpl implements JWTService {
         this.expirationMs = expirationMs;
     }
 
-    public String generateToken(UUID userId, String eccToken) {
+    public String generateToken(UUID userId) {
         long now = System.currentTimeMillis();
         return Jwts.builder()
                 .subject(userId.toString())
-                .claim("ecc_key", eccToken)
                 .issuedAt(new Date(now))
                 .expiration(new Date(now+expirationMs))
                 .signWith(signingKey)

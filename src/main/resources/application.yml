@@ -1,15 +1,11 @@
-# application.yml del Microservicio de Auth
-server:
-  port: 8083
-
 jwt:
-  secret-key: uaobUg2LDENICut8ZxXjVpUL6ob+9+J1oFje1qn6EZi6D+CB2WV6q02AVlCzdxpNNrEKqjDo0nLeVcoaLPu39A==
-  expiration-ms: 172800000
+  secret-key: ${SPRING_JWT_KEY}
+  expiration-ms: ${SPRING_JWT_EXPIRATION}
 
 # Feign (Para llamar a Usuarios y Roles)
 user:
   service:
-    url: http://localhost:8080/api/user
+    url: http://${SPRING_USER_SERVICE:localhost:8080}/api/user
 role:
   service:
-    url: http://localhost:8080/api/role
+    url: http://${SPRING_ROLE_SERVICE:localhost:8080}/api/role

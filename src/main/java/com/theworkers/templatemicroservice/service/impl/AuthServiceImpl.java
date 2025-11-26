@@ -36,25 +36,11 @@ public class AuthServiceImpl implements AuthService {
     public WebResponse login(UserLoginInput credentials) {
         try{
             WebResponse verifyCredentials = userServiceClient.verifyCredentials(credentials);
-            if(verifyCredentials.getCodeStatus().equals(HttpStatus.UNAUTHORIZED.value())){return verifyCredentials;}
+            if(verifyCredentials.getCodeStatus().equals(HttpStatus.UNAUTHORIZED)){return verifyCredentials;}
             UserOutputDTO userDetails = objectMapper.convertValue(verifyCredentials.getEntity(), UserOutputDTO.class);
-            String token = jWTService.generateToken(userDetails.getId(), credentials.getEccToken());
+            String token = jWTService.generateToken(userDetails.getId());
             userDetails.setToken(token);
             userDetails.setExpirationMs(expirationMs);
-            String bearerToken = "Bearer " + token;
-            EccInputDTO eccRequest = new EccInputDTO();
-            eccRequest.setPublicKey(credentials.getEccToken());
-
-            WebResponse setECCToken = userServiceClient.setEccToken(
-                    bearerToken,
-                    eccRequest,
-                    userDetails.getId()
-            );
-            log.info("\n\nRespuesta del API: " + setECCToken.getCodeStatus() + "\n\n");
-            if (setECCToken.getCodeStatus() == null & setECCToken.getCodeStatus() !=  HttpStatus.OK) {
-                System.out.println("Error del API User: " + setECCToken.getMessage());
-                throw new ValidateWebException("El login fue exitoso, pero no se pudo guardar la clave ECC.", HttpStatus.INTERNAL_SERVER_ERROR);
-            }
             return new WebResponse("Successfully Logged In", HttpStatus.OK, userDetails);
         }catch(ValidateWebException e){throw e;}
     }
