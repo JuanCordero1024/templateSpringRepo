@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignorar archivos subidos por usuarios
+uploads/
+*.pdf
+*.docx

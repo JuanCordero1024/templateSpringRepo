@@ -1,0 +1,7 @@
+user:
+  service:
+    url: http://${URL_USER_SERVICE:localhost:8080}/api/user
+
+sign:
+  service:
+    url: http://${URL_SIGN_SERVICE:localhost:8000}
