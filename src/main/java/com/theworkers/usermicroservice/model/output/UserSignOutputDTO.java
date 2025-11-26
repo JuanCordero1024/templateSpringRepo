@@ -11,7 +11,7 @@ import java.util.UUID;
 @Builder
 @Getter
 @Setter
-public class UserOutputDTO {
+public class UserSignOutputDTO {
 
     @Schema(description = "Id of user Output")
     private UUID id;
@@ -32,6 +32,9 @@ public class UserOutputDTO {
     private UserStatus status;
     @Schema(description = "User's role ID")
     private Long roleId;
+
+    @Schema
+    private String privateKey;
 
     @Schema(description = "User's token")
     private String token;

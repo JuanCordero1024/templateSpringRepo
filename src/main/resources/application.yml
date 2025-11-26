@@ -1,3 +1,7 @@
 role:
   service:
-    url: http://localhost:8080/api/role
+    url: http://${URL_ROLE_SERVICE:localhost:8080}/api/role
+
+jwt:
+  secret-key: ${SPRING_JWT_SECRET}
+  expiration-ms: ${SPRING_EXPIRATION_MS}

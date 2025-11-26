@@ -2,7 +2,6 @@ package com.theworkers.usermicroservice.model.mappers;
 
 import com.theworkers.usermicroservice.model.Role;
 import com.theworkers.usermicroservice.model.input.RoleInputDTO;
-import com.theworkers.usermicroservice.model.input.UserInputDTO;
 import com.theworkers.usermicroservice.model.output.RoleOutputDTO;
 import org.mapstruct.Mapper;
 

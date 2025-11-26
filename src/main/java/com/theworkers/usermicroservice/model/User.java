@@ -1,5 +1,7 @@
 package com.theworkers.usermicroservice.model;
 
+import com.theworkers.usermicroservice.model.enums.UserStatus;
+import com.theworkers.usermicroservice.util.EncryptDecryptConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,12 +24,19 @@ public class User {
     private String name;
     private String lastName;
     private String middleName;
-
+    @Convert(converter = EncryptDecryptConverter.class)
+    @Column(name = "employee_number")
+    private String employeeNumber;
     private String email;
-
     private String password;
-
     private String eccPublicKey;
+    private UserStatus status;
+
+    @Column(columnDefinition = "TEXT")
+    private String publicKey;
+
+    @Column(columnDefinition = "TEXT")
+    private String privateKey;
 
     @Column(name = "role_id")
     private Long roleId;
