@@ -10,15 +10,6 @@ This *README* gives an overview, quick start instructions, architecture guidance
 - Offer a base for ACID-capable modules (user CRUD, roles) and stateless microservices (file service, auth tokens, signature processor).
 - Provide Dockerized development and Compose for local end-to-end runs.
 
-## What I inspected
-I enumerated the repository branches and top-level files:
-- Branches found:
-    - feat/Microservice_firma
-    - feat/authMicroService
-    - feat/crud-user
-    - feat/files-microService
-    - feat/roleService
-    - main (template based microservices)
 ## Architecture (high-level)
 - **Hybrid**: the repo aims to support both:
     - Layered modules within a service (Controller -> Service -> Repository)
@@ -26,7 +17,7 @@ I enumerated the repository branches and top-level files:
 - Each branch implements a single responsibility:
     - Transactional/ACID services: user CRUD, role service (persist data in a relational DB with transactions)
     - Stateless or file-based services: file microservice (file storage), auth microservice (token issuance/validation), signature microservice (document signing)
-- Typical packages (expected):
+- Typical packages:
     - controller (REST endpoints)
     - service (business logic + transactions)
     - repository (Spring Data JPA / persistence)
@@ -81,7 +72,7 @@ Environment variables to confirm/setup (common):
     - Responsibility: signature processing microservice — apply and verify electronic signatures on documents.
 
 - main
-    - Canonical base branch. Use for release-ready composition or to merge well-tested services.
+    - Canonical base branch. Use for release-ready composition, is the main template of the other ones.
 
 ## API Gateway and usage on environment variables
 
